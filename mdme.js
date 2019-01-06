@@ -63,6 +63,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * Set default configuration options.
    */
   mdme.setDefaultOptions = function () {
+    options.destinationID = undefined
     options.renderOnLoad = true
     options.style = 'viewer'
     options.onRenderPage = undefined
@@ -192,6 +193,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     var outputElement = window.document.createElement('main')
     var inputText
     var title
+    var destination
 
     // Remove input from page after reading it into a local variable.
     if (textareaElements.length > 0) {
@@ -210,7 +212,13 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }
 
     // Create the output element.
-    window.document.body.appendChild(outputElement)
+    if (typeof options.destinationID !== 'undefined') {
+      destination = window.document.getElementById(options.destinationID)
+    }
+    if (typeof destination === 'undefined' || destination === null) {
+      destination = window.document.body
+    }
+    destination.appendChild(outputElement)
 
     // Set stylesheet.
     var styleElement = window.document.createElement('style')
